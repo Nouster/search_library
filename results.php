@@ -1,14 +1,19 @@
-<?php require_once 'data/library.php';
-
+<?php 
+$search = strtolower($_GET['q']);
 // To redirect to home in case of empty parameter
-$search = isset($_GET['q']) ? strtolower($_GET['q']) : header('location : search.php');
+if(!isset($search)){
+    header('Location: search.php'); // Rediriger avec un message d'erreur pour plus tard
+    exit;
+}
+require_once 'data/library.php';
 
 // Conversion to lowercase to make the search case-insensitive
 $results = array_filter($libraryGames, fn ($game)=> str_contains(strtolower($game['gameName']), $search));
-// $results['description'] = substr($results['description'], 0, 250);
-foreach ($results as &$result) {
-    $result['description'] = substr($result['description'], 0, 150);
-  }
+
+function excerpt(string $text, int $limit): string{
+    
+    return substr($text, 0, strpos($text, ' ', $limit));
+}
 
 //Adapt the spelling to match the search results
 function displayResult($results){
@@ -29,19 +34,20 @@ require_once 'layout/header.php';?>
 <h3 class="text-center"><?php displayResult($results)?></h3>
 
 
-<section class="container mt-5">
-    <div class="row justify-content-center gap-2">
+<section class="container bg-dark text-light p-5 mt-5 rounded">
+    <div class="row justify-content-center gap-5">
     <?php foreach ($results as $result) { ?>
-            <div class="col-md-3 border rounded px-0">
-                <h4 class="text-center text-light bg-dark rounded"><?php echo $result['gameName'] ?></h4>
+            <div class="col-md-3 border rounded px-0 vignette">
+                <h4 class="text-center fs-5 my-2 rounded"><?php echo $result['gameName'] ?></h4>
                     <img class="img-fluid rounded" src="<?php echo $result['picture'] ?>" alt="">
                 <div class="ps-2">
                     <div class="d-flex justify-content-around mt-3">
                         <span class="bg-warning px-2 py-1 rounded"><?php echo $result['category']?></span>
                         <span class="bg-success px-4 py-1 rounded"><?php echo $result['platform']?></span>
                     </div>
-                    <div class="mt-3">
-                        <?php echo $result['description']?>
+                    <hr class="w-50 mx-auto">
+                    <div class="mt-3 fs-6 p-2">
+                        <?php echo excerpt($result['description'], 150)?> ...
                     </div>
                 </div>
             </div>
