@@ -12,4 +12,4 @@ Dependencies
 This code requires PHP 7.4 or later.
 
 Acknowledgments
-This code is based on a tutorial from Code With Dary.
+This code is based on a tutorial

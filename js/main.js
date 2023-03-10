@@ -35,14 +35,14 @@ let customNodeCreator = function(character) {
 }
 
 let typewriter = new Typewriter(app, {
-  loop: false,
+  loop: true,
   delay: 75,
   onCreateTextNode: customNodeCreator,
 });
 
 typewriter
   .typeString('Level up <span class= "bg-dark px-3 py-1 text-white rounded">your skills</span>')
-  .pauseFor(100)
+  .pauseFor(1000)
   .start();
 
 typewriter.typeString('')

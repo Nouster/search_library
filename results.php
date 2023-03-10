@@ -1,5 +1,7 @@
 <?php 
 require_once 'layout/nav.php';
+require_once 'functions/functions.php';
+require_once 'data/library.php';
 
 $search = strtolower($_GET['q']);
 // To redirect to home in case of empty parameter
@@ -7,26 +9,12 @@ if(!isset($search)){
     header('Location: search.php'); // Rediriger avec un message d'erreur pour plus tard
     exit;
 }
-require_once 'data/library.php';
+
 
 // Conversion to lowercase to make the search case-insensitive
 $results = array_filter($libraryGames, fn ($game)=> str_contains(strtolower($game['gameName']), $search));
 
-function excerpt(string $text, int $limit): string{
-    
-    return substr($text, 0, strpos($text, ' ', $limit));
-}
 
-//Adapt the spelling to match the search results
-function displayResult($results){
-    $displayText = ' résultat trouvé';
-    if(count($results)>1){
-        $displayText = ' résultats trouvés';
-        echo count($results) . $displayText;
-    }else {
-        echo count($results) . $displayText;
-    }
-}
 
 require_once 'layout/header.php';?>
 <a class= "text-decoration-none text-black d-block ms-5 mt-5" href="search.php"><svg class="me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
