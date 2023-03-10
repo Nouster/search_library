@@ -1,4 +1,6 @@
 <?php 
+require_once 'layout/nav.php';
+
 $search = strtolower($_GET['q']);
 // To redirect to home in case of empty parameter
 if(!isset($search)){
@@ -54,3 +56,5 @@ require_once 'layout/header.php';?>
     <?php } ?>
     </div>
 </section>
+
+<?php require_once 'layout/footer.php';?>

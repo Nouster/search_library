@@ -27,19 +27,32 @@ submitButton.onmouseout = ()=>{
 
 }
 
-var app = document.getElementById('app');
+let app = document.getElementById('app');
 
-var typewriter = new Typewriter(app, {
-  loop: true,
+
+let customNodeCreator = function(character) {
+  return document.createTextNode(character);
+}
+
+let typewriter = new Typewriter(app, {
+  loop: false,
   delay: 75,
+  onCreateTextNode: customNodeCreator,
 });
 
 typewriter
-  .pauseFor(2500)
-  .typeString('A simple yet powerful native javascript')
-  .pauseFor(300)
-  .deleteChars(10)
-  .typeString('<strong>JS</strong> plugin for a cool typewriter effect and ')
-  .typeString('<strong>only <span style="color: #27ae60;">5kb</span> Gzipped!</strong>')
-  .pauseFor(1000)
+  .typeString('Level up <span class= "bg-dark px-3 py-1 text-white rounded">your skills</span>')
+  .pauseFor(100)
   .start();
+
+typewriter.typeString('')
+    .pauseFor(1000)
+    .deleteAll(5)
+    .typeString('with the<span class = "bg-dark px-3 py-1 text-white rounded"> power of gaming </span>')
+    .pauseFor(1000)
+    .deleteChars()
+    .start();
+  
+
+
+    
