@@ -1,4 +1,27 @@
-<?php require_once 'layout/header.php'; ?>
+<?php 
+require_once 'layout/header.php';
+
+$curl = curl_init('https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=12d8a10ed4a8966b8d2f0e60baab934a');
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // ajouter cette option pour retourner la réponse dans une variable
+
+$response = curl_exec($curl);
+
+if ($response === false) {
+    var_dump('Impossible de se connecter à openweathermap.org');
+} else {
+    $data = json_decode($response, true);
+    if ($data === null) { // vérifier si la réponse est un JSON valide
+        var_dump('Erreur de décodage JSON');
+    } else {
+        echo '<span>';
+        var_dump($data['main']['temp']);
+        echo '</span>';
+    }
+}
+
+curl_close($curl);
+?>
+
 
 
 
@@ -12,7 +35,6 @@
 </form>
 
 <?php require_once 'layout/footer.php'; 
-
 ?>
 
 
